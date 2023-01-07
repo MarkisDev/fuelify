@@ -2,8 +2,6 @@ from database import Database
 
 
 class FuelInventory(Database):
-    def __init__(self):
-        super().__init__()
 
     def create_fuel(self, fuel_type, quantity):
         self.execute(
