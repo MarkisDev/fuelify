@@ -1,8 +1,8 @@
 import bcrypt
-from models import database
+from models.database import Database
 
 
-class User(database.Database):
+class User(Database):
     def validate_login(self, username, password):
         cursor = self.execute(
             'SELECT * FROM user_accounts WHERE username=?',
