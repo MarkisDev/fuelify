@@ -93,30 +93,35 @@ class Database:
                                       'rijuthm@gmail.com', 'owner', 00.00,  'admin', 'admin@password', 'admin')
 
     def create_employee_and_user(self, first_name, last_name, phone_number, address, email, job_role, salary, username, password, role):
-        # Create employee
-        self.execute(
-            """
-                INSERT INTO employees (first_name, last_name, phone_number, address, email, job_role, salary)
-                VALUES (?, ?, ?, ?, ?, ?, ?)
-                """,
-            (first_name, last_name, phone_number, address, email, job_role, salary)
-        )
 
-        # Get employee_id of newly created employee
-        cursor = self.execute(
-            "SELECT employee_id FROM employees ORDER BY employee_id DESC LIMIT 1"
-        )
-        employee_id = cursor.fetchone()[0]
+        cursor = self.execute("SELECT COUNT(*) FROM user_accounts")
+        if cursor.fetchone()[0] == 0:
+            # Create employee
+            self.execute(
+                """
+                    INSERT INTO employees (first_name, last_name, phone_number, address, email, job_role, salary)
+                    VALUES (?, ?, ?, ?, ?, ?, ?)
+                    """,
+                (first_name, last_name, phone_number,
+                 address, email, job_role, salary)
+            )
 
-        # Create user account linked to employee
-        hashed_password = bcrypt.hashpw(password.encode(), bcrypt.gensalt())
-        self.execute(
-            """
-                INSERT INTO user_accounts (employee_id, username, password, role)
-                VALUES (?, ?, ?, ?)
-                """,
-            (employee_id, username, hashed_password, role)
-        )
+            # Get employee_id of newly created employee
+            cursor = self.execute(
+                "SELECT employee_id FROM employees ORDER BY employee_id DESC LIMIT 1"
+            )
+            employee_id = cursor.fetchone()[0]
+
+            # Create user account linked to employee
+            hashed_password = bcrypt.hashpw(
+                password.encode(), bcrypt.gensalt())
+            self.execute(
+                """
+                    INSERT INTO user_accounts (employee_id, username, password, role)
+                    VALUES (?, ?, ?, ?)
+                    """,
+                (employee_id, username, hashed_password, role)
+            )
 
     def execute(self, query, params=None):
         cursor = self.conn.cursor()
