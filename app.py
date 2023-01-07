@@ -1,7 +1,10 @@
 import uuid
 from functools import wraps
 from flask import Flask, request, session, redirect, url_for, flash, render_template
-from models import database, user
+from models.user import User
+from models.employee import Employee
+from models.fuel_inventory import FuelInventory
+from models.fuel_purchases import FuelPurchases
 # , fuel_inventory, fuel_purchase, customer_information
 app = Flask(__name__)
 app.secret_key = str(uuid.uuid4())
@@ -29,7 +32,7 @@ def login():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
-        user_model = user.User()
+        user_model = User()
         result = user_model.validate_login(username, password)
         if result:
             session['user_id'] = result[0]
@@ -53,9 +56,9 @@ def logout():
 @login_required
 def home():
     user_id = session['user_id']
-    user_model = user.User()
-    user_data = user_model.get_user_data(user_id)
-    return render_template('home.html', user_data=user_data)
+    user_data = User().get_user_data(user_id)
+    employee_data = Employee
+    return render_template('home.html', user=user_data)
 
 
 if __name__ == '__main__':
