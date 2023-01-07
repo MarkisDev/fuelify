@@ -23,7 +23,7 @@ def login_required(f):
 @app.route('/')
 def index():
     if 'username' in session:
-        return redirect(url_for('home'))
+        return redirect(url_for('dashboard'))
     return redirect(url_for('login'))
 
 
@@ -38,7 +38,7 @@ def login():
             session['user_id'] = result[0]
             session['username'] = result[1]
             session['role'] = result[4]
-            return redirect(url_for('home'))
+            return redirect(url_for('dashboard'))
         else:
             flash('Incorrect username or password')
     return render_template('login.html')
@@ -52,13 +52,13 @@ def logout():
     return redirect(url_for('login'))
 
 
-@app.route('/home')
+@app.route('/dashboard')
 @login_required
-def home():
+def dashboard():
     user_id = session['user_id']
     user_data = User().get_user_data(user_id)
     employee_data = Employee
-    return render_template('home.html', user=user_data)
+    return render_template('dashboard.html', user=user_data)
 
 
 if __name__ == '__main__':
