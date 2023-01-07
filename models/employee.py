@@ -1,11 +1,8 @@
 import bcrypt
-from models.database import database
+from models.database import Database
 
 
 class Employee(Database):
-
-    def init(self):
-        super().init()
 
     def get_all_employees(self):
         cursor = self.conn.cursor()
