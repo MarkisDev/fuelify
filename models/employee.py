@@ -1,8 +1,8 @@
 import bcrypt
-from models import database
+from models.database import database
 
 
-class Employee(database.Database):
+class Employee(Database):
 
     def init(self):
         super().init()
