@@ -3,6 +3,7 @@ from models.database import Database
 
 
 class FuelPurchases(Database):
+
     def create(self, employee_id, customer_id, fuel_id, quantity, price, purchase_date):
         self.execute(
             """
