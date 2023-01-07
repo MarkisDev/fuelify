@@ -20,7 +20,10 @@ class User(Database):
 
     def get_user_data(self, user_id):
         cursor = self.execute(
-            'SELECT * FROM user_accounts WHERE user_id=?',
+            """
+            SELECT * FROM user_accounts u, employees e 
+            WHERE u.employee_id=e.employee_id AND user_id = ?
+            """,
             (user_id,)
         )
         user = cursor.fetchone()
