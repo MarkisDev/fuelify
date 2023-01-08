@@ -54,7 +54,8 @@ class Database:
                 CREATE TABLE IF NOT EXISTS fuel_inventory (
                     fuel_id INTEGER PRIMARY KEY,
                     fuel_type VARCHAR(255),
-                    quantity FLOAT
+                    quantity FLOAT,
+                    price FLOAT
                 )
                 """
         )
