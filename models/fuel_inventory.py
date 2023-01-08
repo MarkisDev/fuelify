@@ -3,13 +3,13 @@ from models.database import Database
 
 class FuelInventory(Database):
 
-    def create_fuel(self, fuel_type, quantity):
+    def create_fuel(self, fuel_type, quantity, price):
         self.execute(
             """
-            INSERT INTO fuel_inventory (fuel_type, quantity)
-            VALUES (?, ?)
+            INSERT INTO fuel_inventory (fuel_type, quantity, price)
+            VALUES (?, ?, ?)
             """,
-            (fuel_type, quantity)
+            (fuel_type, quantity, price)
         )
 
     def get_fuel(self, fuel_id=None):
@@ -30,17 +30,26 @@ class FuelInventory(Database):
             )
             return cursor.fetchall()
 
-    def update_fuel(self, fuel_id, fuel_type=None, quantity=None):
-        if fuel_type:
+    def update_fuel(self, fuel_id, price=None, quantity=None):
+        if price and quantity:
             self.execute(
                 """
                 UPDATE fuel_inventory
-                SET fuel_type = ?
+                SET price = ?, quantity = ?
                 WHERE fuel_id = ?
                 """,
-                (fuel_type, fuel_id)
+                (price, quantity, fuel_id)
             )
-        if quantity:
+        elif price:
+            self.execute(
+                """
+                UPDATE fuel_inventory
+                SET price = ?
+                WHERE fuel_id = ?
+                """,
+                (price, fuel_id)
+            )
+        elif quantity:
             self.execute(
                 """
                 UPDATE fuel_inventory
