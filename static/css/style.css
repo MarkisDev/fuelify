@@ -3,12 +3,16 @@
 :root {
   --primary-color: #6366f1;
   --primary-color-hover: #6365f1e3;
-  --gray-color: #f3f4f6;
+  --gray-color: #f3f4f68f;
 }
 
 body {
+  /* height: 100vh; */
+  min-height: 100vh;
   font-family: "Lato", sans-serif;
   color: #1d1d1d;
+  display: flex;
+  flex-direction: column;
 }
 
 .head-icon {
@@ -41,7 +45,51 @@ section {
   color: #fff;
   background-color: var(--primary-color-hover) !important;
 }
+.btn-prime:active:focus {
+  color: #fff;
+  background-color: var(--primary-color-hover) !important;
+}
 
 .navbar .active {
   color: var(--primary-color) !important;
+}
+
+/* .dataTable {
+  background-color: var(--gray-color);
+} */
+th {
+  border-top: 1px solid #dddddd;
+  border-right: 1px solid #dddddd;
+}
+
+td {
+  border-top: 1px solid #dddddd;
+  border-bottom: 1px solid #dddddd;
+  border-right: 1px solid #dddddd;
+}
+td:first-child {
+  border-left: 1px solid #dddddd;
+}
+th:first-child {
+  border-left: 1px solid #dddddd;
+}
+
+.paginate_button.active a {
+  background-color: var(--primary-color);
+}
+
+.paginate_button.next a {
+  color: var(--primary-color);
+}
+
+.paginate_button.previous a {
+  color: var(--primary-color);
+}
+
+.paginate_button.disabled a {
+  color: #1d1d1dbb;
+}
+
+footer {
+  margin-top: auto;
 }
