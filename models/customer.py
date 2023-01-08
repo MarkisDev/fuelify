@@ -12,23 +12,24 @@ class Customer(Database):
             (first_name, last_name, phone_number, email)
         )
 
-    def get_all(self):
-        cursor = self.execute(
-            """
-            SELECT * FROM customer_information
-            """
-        )
-        return cursor.fetchall()
+    def get(self, customer_id=None):
 
-    def get_by_id(self, customer_id):
-        cursor = self.execute(
-            """
-            SELECT * FROM customer_information
-            WHERE customer_id = ?
-            """,
-            (customer_id,)
-        )
-        return cursor.fetchone()
+        if customer_id:
+            cursor = self.execute(
+                """
+                SELECT * FROM customer_information
+                WHERE customer_id = ?
+                """,
+                (customer_id,)
+            )
+            return cursor.fetchone()
+        else:
+            cursor = self.execute(
+                """
+                SELECT * FROM customer_information
+                """
+            )
+            return cursor.fetchall()
 
     def update(self, customer_id, first_name, last_name, phone_number, email):
         self.execute(
