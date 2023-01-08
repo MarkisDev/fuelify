@@ -8,6 +8,9 @@ auth_routes = Blueprint('auth_routes', __name__)
 
 @auth_routes.route('/login', methods=['GET', 'POST'])
 def login():
+    if 'username' in session:
+        return redirect(url_for('auth_routes.dashboard'))
+
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
