@@ -4,31 +4,28 @@ from models.database import Database
 
 class Employee(Database):
 
-    def get_all_employees(self):
+    def get(self, employee_id=None):
         cursor = self.conn.cursor()
-        cursor.execute(
-            """
-            SELECT *
-            FROM employees
-            """
-        )
-        employees = cursor.fetchall()
-        return employees
+        if employee_id:
+            cursor.execute(
+                """
+                SELECT *
+                FROM employees
+                WHERE employee_id=?
+                """,
+                (employee_id,)
+            )
+            return cursor.fetchone()
+        else:
+            cursor.execute(
+                """
+                SELECT *
+                FROM employees
+                """
+            )
+        return cursor.fetchall()
 
-    def get_employee(self, employee_id):
-        cursor = self.conn.cursor()
-        cursor.execute(
-            """
-            SELECT *
-            FROM employees
-            WHERE employee_id=?
-            """,
-            (employee_id,)
-        )
-        employee = cursor.fetchone()
-        return employee
-
-    def add_employee(self, first_name, last_name, phone_number, address, email, job_role, salary):
+    def create(self, first_name, last_name, phone_number, address, email, job_role, salary):
         cursor = self.conn.cursor()
         cursor.execute(
             """
@@ -39,7 +36,7 @@ class Employee(Database):
         )
         self.conn.commit()
 
-    def delete_employee(self, employee_id):
+    def delete(self, employee_id):
         cursor = self.conn.cursor()
         cursor.execute(
             """
@@ -50,7 +47,7 @@ class Employee(Database):
         )
         self.conn.commit()
 
-    def update_employee(self, employee_id, first_name, last_name, phone_number, address, email, job_role, salary):
+    def update(self, employee_id, first_name, last_name, phone_number, address, email, job_role, salary):
         cursor = self.conn.cursor()
         cursor.execute(
             """
