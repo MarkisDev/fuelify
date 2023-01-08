@@ -1,7 +1,7 @@
 from flask import Flask, session, redirect, url_for, render_template
 from routes.fuel_inventory import fuel_routes
 from routes.auth import auth_routes
-from utils.utils import login_required
+from helpers.utils import login_required
 
 app = Flask(__name__)
 app.secret_key = 'secretKey'

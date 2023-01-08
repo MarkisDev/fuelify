@@ -1,5 +1,5 @@
 from models.user import User
-from utils.utils import login_required
+from helpers.utils import login_required
 
 from flask import Blueprint, request, redirect, url_for, flash, render_template, session
 
