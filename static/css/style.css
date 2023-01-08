@@ -1,0 +1,47 @@
+@import url("https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap");
+
+:root {
+  --primary-color: #6366f1;
+  --primary-color-hover: #6365f1e3;
+  --gray-color: #f3f4f6;
+}
+
+body {
+  font-family: "Lato", sans-serif;
+  color: #1d1d1d;
+}
+
+.head-icon {
+  color: var(--primary-color);
+}
+
+.bg-gray {
+  background-color: var(--gray-color);
+}
+
+section {
+  margin-top: 3%;
+  margin-bottom: 2%;
+}
+
+#features .card {
+  border: none;
+}
+
+.bi {
+  color: var(--primary-color) !important;
+}
+
+.btn-prime {
+  background-color: var(--primary-color) !important;
+  color: #fff;
+}
+
+.btn-prime:hover {
+  color: #fff;
+  background-color: var(--primary-color-hover) !important;
+}
+
+.navbar .active {
+  color: var(--primary-color) !important;
+}
