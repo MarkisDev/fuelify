@@ -12,7 +12,7 @@ class FuelInventory(Database):
             (fuel_type, quantity, price)
         )
 
-    def get_fuel(self, fuel_id=None):
+    def get(self, fuel_id=None):
         if fuel_id:
             cursor = self.execute(
                 """
