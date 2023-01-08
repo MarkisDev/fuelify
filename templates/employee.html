@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Employee | Employeeify</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        crossorigin="anonymous">
+</head>
+
+<body>
+
+    <body>
+
+        <div class="container mt-5">
+            <h2 class="text-center mb-5">Employee</h2>
+            <div class="row">
+                <div class="col-md-8 mx-auto">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">Add Employee</h4>
+                        </div>
+                        {% with messages = get_flashed_messages(with_categories=true) %}
+                        {% if messages %}
+                        {% for category, message in messages %}
+                        {% if category == 'success' %}
+                        <div class="alert alert-success">{{ message }}</div>
+                        {% elif category == 'error' %}
+                        <div class="alert alert-danger">{{ message }}</div>
+                        {% endif %}
+                        {% endfor %}
+                        {% endif %}
+                        {% endwith %}
+                        <div class="card-body">
+                            <form action="{{ url_for('employee_routes.add_employee') }}" method="POST">
+                                <div class="form-group">
+                                    <label for="name">First Name</label>
+                                    <input type="text" class="form-control" id="first_name" name="first_name"
+                                        placeholder="Enter name">
+                                </div>
+                                <div class="form-group">
+                                    <label for="name">Last Name</label>
+                                    <input type="text" class="form-control" id="last_name" name="last_name"
+                                        placeholder="Enter name">
+                                </div>
+                                <div class="form-group">
+                                    <label for="phone">Phone</label>
+                                    <input type="text" class="form-control" id="phone" name="phone"
+                                        placeholder="Enter phone">
+                                </div>
+                                <div class="form-group">
+                                    <label for="address">Address</label>
+                                    <input type="address" class="form-control" id="address" name="address"
+                                        placeholder="Enter Address">
+                                </div>
+                                <div class="form-group">
+                                    <label for="email">Email</label>
+                                    <input type="email" class="form-control" id="email" name="email"
+                                        placeholder="Enter email">
+                                </div>
+                                <div class="form-group">
+                                    <label for="job_role">Job Role</label>
+                                    <select class="form-control" id="job_role" name="job_role">
+                                        <option value="manager">Manager</option>
+                                        <option value="employee">Employee</option>
+                                        <option value="owner">Owner</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="salary">Salary</label>
+                                    <input type="number" class="form-control" id="salary" name="salary"
+                                        placeholder="Enter name">
+                                </div>
+
+                                <button type="submit" class="btn btn-primary">Add Employee</button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <table class="table mt-5">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Phone</th>
+                                <th>Address</th>
+                                <th>Email</th>
+                                <th>Job</th>
+                                <th>Salary</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for employee in employees %}
+                            <tr>
+                                <td>{{ employee[1]}} {{ employee[2] }}</td>
+                                <td>{{ employee[3] }}</td>
+                                <td>{{ employee[4] }}</td>
+                                <td>{{ employee[5] }}</td>
+                                <td>{{ employee[6] }}</td>
+                                <td>{{ employee[7] }}</td>
+
+                                <td>
+                                    <div class="row">
+                                        <button type="button" class="btn btn-primary" data-toggle="modal"
+                                            data-target="#update-{{ employee[0] }}">
+                                            Update
+                                        </button>
+                                        <button type="button" class="btn btn-danger" data-toggle="modal"
+                                            data-target="#delete-{{ employee[0] }}">
+                                            Delete
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+
+
+                            <div class="modal fade" id="delete-{{ employee[0] }}" tabindex="-1" role="dialog"
+                                aria-labelledby="deleteEmployee" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="">Delete
+                                                Employee
+                                            </h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form
+                                                action="{{ url_for('employee_routes.delete_employee', employee_id=employee[0]) }}"
+                                                method="POST">
+                                                <input type="hidden" name="employee_id" value="{{ employee[0] }}">
+
+                                                <div class="form-group">
+                                                    <p>Are you sure you want to delete {{employee[1]}}?</p>
+                                                </div>
+                                                <button type="submit" class="btn btn-danger">Delete
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                            <div class="modal fade" id="update-{{ employee[0] }}" tabindex="-1" role="dialog"
+                                aria-labelledby="updateEmployee" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="">Update
+                                                Employee Details
+                                            </h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form action="{{ url_for('employee_routes.update_employee') }}"
+                                                method="POST">
+                                                <input type="hidden" name="employee_id" value="{{ employee[0] }}">
+                                                <div class="form-group">
+                                                    <label for="first_name">First name</label>
+                                                    <input type="text" class="form-control" value="{{employee[1]}}"
+                                                        id="first_name" name="first_name"
+                                                        placeholder="Enter new first name">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="last_name">Last name</label>
+                                                    <input type="text" class="form-control" value="{{employee[2]}}"
+                                                        id="last_name" name="last_name"
+                                                        placeholder="Enter new last name">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="phone">Phone</label>
+                                                    <input type="number" class="form-control" value="{{employee[3]}}"
+                                                        id="phone" name="phone" placeholder="Enter new phone">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="address">Address</label>
+                                                    <input type="address" class="form-control" id="address"
+                                                        name="address" value="{{employee[4]}}"
+                                                        placeholder="Enter Address">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="email">Email</label>
+                                                    <input type="email" class="form-control" id="email"
+                                                        value="{{employee[5]}}" name="email"
+                                                        placeholder="Enter new email">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="job_role">Job Role</label>
+                                                    <select class="form-control" id="job_role" name="job_role">
+                                                        <option {% if employee[6]=='Manager' %} selected {% endif %}>
+                                                            Manager</option>
+                                                        <option {% if employee[6]=='Employee' %} selected {% endif %}>
+                                                            Employee</option>
+                                                        <option {% if employee[6]=='Owner' %} selected {% endif %}>Owner
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="salary">Salary</label>
+                                                    <input value="{{employee[7]}}" type="number" class="form-control"
+                                                        id="salary" name="salary" placeholder="Enter name">
+                                                </div>
+                                                <button type="submit" class="btn btn-primary">Update
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </body>
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
