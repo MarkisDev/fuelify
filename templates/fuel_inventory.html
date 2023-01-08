@@ -32,7 +32,7 @@
                     {% endif %}
                     {% endwith %}
                     <div class="card-body">
-                        <form action="{{ url_for('fuel_routes.add_fuel') }}" method="POST">
+                        <form action="{{ url_for('fuel_inventory_routes.add_fuel') }}" method="POST">
                             <div class="form-group">
                                 <label for="fuel_type">Fuel Type</label>
                                 <input type="text" class="form-control" id="fuel_type" name="fuel_type"
@@ -96,7 +96,8 @@
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        <form action="{{ url_for('fuel_routes.delete_fuel', fuel_id=fuel[0]) }}"
+                                        <form
+                                            action="{{ url_for('fuel_inventory_routes.delete_fuel', fuel_id=fuel[0]) }}"
                                             method="POST">
                                             <input type="hidden" name="fuel_id" value="{{ fuel[0] }}">
 
@@ -126,7 +127,7 @@
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        <form action="{{ url_for('fuel_routes.update_fuel') }}" method="POST">
+                                        <form action="{{ url_for('fuel_inventory_routes.update_fuel') }}" method="POST">
                                             <input type="hidden" name="fuel_id" value="{{ fuel[0] }}">
                                             <div class="form-group">
                                                 <label for="new_quantity">New Quantity (Litres)</label>
