@@ -1,7 +1,7 @@
 from models.fuel_inventory import FuelInventory
 from helpers.utils import login_required
 
-from flask import Blueprint, request, redirect, url_for, flash, render_template
+from flask import Blueprint, request, redirect, url_for, flash, render_template, session
 
 fuel_inventory_routes = Blueprint('fuel_inventory_routes', __name__)
 
@@ -10,7 +10,7 @@ fuel_inventory_routes = Blueprint('fuel_inventory_routes', __name__)
 @login_required
 def fuel_inventory():
     fuel_inventory_data = FuelInventory().get()
-    return render_template('fuel_inventory.html', fuel_inventory=fuel_inventory_data)
+    return render_template('fuel_inventory.html', fuel_inventory=fuel_inventory_data, request_path=request.path,  role=session['role'], logged_in=True)
 
 
 @fuel_inventory_routes.route('/add_fuel', methods=['POST'])
