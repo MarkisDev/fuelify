@@ -101,7 +101,7 @@ class Database:
             """
         )
         self.create_employee_and_user('Rijuth', 'Menon', '8217784182', 'Pai Layout',
-                                      'rijuthm@gmail.com', 'owner', 00.00,  'admin', 'admin@password', 'admin')
+                                      'rijuthm@gmail.com', 'owner', 00.00,  'admin', 'admin@password', 'Owner')
 
     def create_employee_and_user(self, first_name, last_name, phone_number, address, email, job_role, salary, username, password, role):
 

@@ -18,16 +18,24 @@ class User(Database):
         else:
             return None
 
-    def get_user_data(self, user_id):
-        cursor = self.execute(
-            """
-            SELECT * FROM user_accounts u, employees e 
-            WHERE u.employee_id=e.employee_id AND user_id = ?
-            """,
-            (user_id,)
-        )
-        user = cursor.fetchone()
-        return user
+    def get_user_data(self, user_id=None):
+        if user_id:
+            cursor = self.execute(
+                """
+                SELECT * FROM user_accounts u, employees e 
+                WHERE u.employee_id=e.employee_id AND user_id = ?
+                """,
+                (user_id,)
+            )
+            return cursor.fetchone()
+        else:
+            cursor = self.execute(
+                """
+                SELECT * FROM user_accounts u, employees e 
+                WHERE u.employee_id=e.employee_id
+                """,
+            )
+            return cursor.fetchall()
 
     def add_user(self, employee_id, username, password, role):
         hashed_password = bcrypt.hashpw(password.encode(), bcrypt.gensalt())
