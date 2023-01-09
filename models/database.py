@@ -25,11 +25,12 @@ class Database:
     # Create employee_schedules table if it does not exist
         self.execute(
             """
-            CREATE TABLE IF NOT EXISTS employee_schedules (
-                employee_id INTEGER PRIMARY KEY,
-                start_time DATE,
-                end_time DATE,
-                FOREIGN KEY (employee_id) REFERENCES employees(employee_id)
+            CREATE TABLE IF NOT EXISTS employee_hours (
+                employee_hours_id INTEGER PRIMARY KEY,
+                employee_id INTEGER,
+                hours_worked FLOAT,
+                entry_date DATE,
+                FOREIGN KEY (employee_id) REFERENCES employees(employee_id) ON DELETE CASCADE
             )
             """
         )
@@ -43,7 +44,7 @@ class Database:
                     username VARCHAR(255),
                     password VARCHAR(255),
                     role VARCHAR(255),
-                    FOREIGN KEY(employee_id) REFERENCES employees(employee_id)
+                    FOREIGN KEY(employee_id) REFERENCES employees(employee_id) ON DELETE CASCADE
                 )
                 """
         )
@@ -83,9 +84,9 @@ class Database:
                     quantity INTEGER,
                     price FLOAT,
                     purchase_date DATE,
-                FOREIGN KEY (employee_id) REFERENCES employees(employee_id),
-                FOREIGN KEY (customer_id) REFERENCES customer_information(customer_id),
-                FOREIGN KEY (fuel_id) REFERENCES fuel_inventory(fuel_id)
+                FOREIGN KEY (employee_id) REFERENCES employees(employee_id) ON DELETE CASCADE, 
+                FOREIGN KEY (customer_id) REFERENCES customer_information(customer_id) ON DELETE CASCADE,
+                FOREIGN KEY (fuel_id) REFERENCES fuel_inventory(fuel_id) ON DELETE CASCADE
                 )
                 """
         )
