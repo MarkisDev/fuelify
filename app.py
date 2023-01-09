@@ -23,7 +23,12 @@ app.register_blueprint(admin_routes)
 
 @app.route('/')
 def index():
-    return render_template('index.html', request_path=request.path, logged_in=False)
+    logged_in = False
+    role = None
+    if 'username' in session:
+        logged_in = True
+        role = session['role']
+    return render_template('index.html', request_path=request.path, logged_in=logged_in, role=role)
 
 
 @app.route('/home')
