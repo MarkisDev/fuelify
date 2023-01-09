@@ -23,7 +23,7 @@ def login():
             return redirect(url_for('auth_routes.dashboard'))
         else:
             flash('Incorrect username or password')
-    return render_template('login.html')
+    return render_template('login.html', request_path=request.path,  role=session['role'], logged_in=False)
 
 
 @auth_routes.route('/logout')
@@ -39,4 +39,4 @@ def logout():
 def dashboard():
     user_id = session['user_id']
     user_data = User().get_user_data(user_id)
-    return render_template('dashboard.html', user=user_data)
+    return render_template('dashboard.html', user=user_data, request_path=request.path,  role=session['role'], logged_in=True)
