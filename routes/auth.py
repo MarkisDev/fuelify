@@ -25,7 +25,7 @@ def login():
             return redirect(url_for('auth_routes.dashboard'))
         else:
             flash('Incorrect username or password')
-    return render_template('login.html', request_path=request.path,  role=session['role'], logged_in=False)
+    return render_template('login.html', request_path=request.path, logged_in=False)
 
 
 @auth_routes.route('/logout')
