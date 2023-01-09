@@ -137,3 +137,41 @@ class Insights(Database):
             (customer_id,)
         )
         return cursor.fetchone()
+
+    def top_performing_employee(self):
+        cursor = self.conn.cursor()
+        cursor.execute(
+            """
+            SELECT e.first_name, e.last_name, SUM(p.quantity) as 'total_sold'
+            FROM fuel_purchases p
+            JOIN employees e ON p.employee_id = e.employee_id
+            GROUP BY e.first_name, e.last_name
+            ORDER BY total_sold DESC
+            LIMIT 1
+            """
+        )
+        return cursor.fetchone()
+
+    def popular_fuel_type(self):
+        cursor = self.conn.cursor()
+        cursor.execute(
+            """
+            SELECT f.fuel_type, SUM(p.quantity) as 'total_sold'
+            FROM fuel_purchases p
+            JOIN fuel_inventory f ON p.fuel_id = f.fuel_id
+            GROUP BY f.fuel_type
+            ORDER BY total_sold DESC
+            LIMIT 1
+            """
+        )
+        return cursor.fetchone()
+
+    def avg_purchase_quantity(self):
+        cursor = self.conn.cursor()
+        cursor.execute(
+            """
+            SELECT AVG(quantity) as 'avg_quantity'
+            FROM fuel_purchases
+            """
+        )
+        return cursor.fetchone()
