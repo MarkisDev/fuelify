@@ -8,24 +8,29 @@
         <div class="row">
             <div class="col">
                 <div class="card  mb-3">
-                    <div class="card-body">
-                        <h5 class="card-title fs-5"> <i class="bi bi-journals me-2 fs-5"> </i> Employee Insights</i>
+                    <div class="card-header text-center bg-white fw-medium fs-4">
+                        <i class="bi bi-journals py-0 me-2"> </i> Employee Insights</i>
+                    </div>
+                    <div class="card-body pt-1">
                         </h5>
-                        <form>
-                            <div class="form-group">
-                                <select class="form-control" id="employeeSelect" name="employee_id">
-                                    {% for employee in employees %}
-                                    <option value="{{employee[0]}}">{{employee[1]}} {{employee[2]}}
-                                    </option>
-                                    {%endfor%}
-                                </select>
-                            </div>
-                        </form>
                         <ul class="list-group list-group-flush">
-                            <li class="list-group-item">Monthly fuel sales: <span id="totalFuelSales">₹ 0</span></li>
-                            <li class="list-group-item">Weekly hours worked: <span id="totalHoursWorked">0</span></li>
+
+                            <li class="list-group-item">
+                                <form>
+                                    <div class="form-group">
+                                        <select class="form-control" id="employeeSelect" name="employee_id">
+                                            {% for employee in employees %}
+                                            <option value="{{employee[0]}}">{{employee[1]}} {{employee[2]}}
+                                            </option>
+                                            {%endfor%}
+                                        </select>
+                                    </div>
+                                </form>
+                            </li>
+                            <li class="list-group-item">Monthly fuel sales: <span id="totalFuelSales"></span></li>
+                            <li class="list-group-item">Weekly hours worked: <span id="totalHoursWorked"></span></li>
                             <li class="list-group-item">Average daily hours worked: <span
-                                    id="avgHoursWorkedPerDay">0</span>
+                                    id="avgHoursWorkedPerDay"></span>
                             </li>
                         </ul>
                     </div>
@@ -33,44 +38,51 @@
             </div>
             <div class="col">
                 <div class="card mb-3">
+                    <div class="card-header text-center bg-white fw-medium fs-4">
+                        <i class="bi bi-bar-chart-line-fill me-2"> </i> General Insights</i>
+                    </div>
                     <div class="card-body">
-                        <h5 class="card-title fs-5"> <i class="bi bi-bar-chart-line-fill me-2 fs-5"> </i> General
-                            Insights</i>
-                        </h5>
+
 
                         <ul class="list-group list-group-flush">
-                            <li class="list-group-item">Total fuel sales: <span id="totalFuelSales">$0</span></li>
-                            <li class="list-group-item">Total hours worked: <span id="totalHoursWorked">0</span></li>
-                            <li class="list-group-item">Average hours worked per day: <span
-                                    id="avgHoursWorkedPerDay">0</span>
+                            <li class="list-group-item">Total monthly sales: <span id="totalMonthlySales"></span></li>
+                            <li class="list-group-item">Average purchase quantity: <span
+                                    id="avgPurchaseQuantity"></span></li>
+                            <li class="list-group-item">Most popular fuel: <span id="popularFuelType"></span>
                             </li>
+                            <li class="list-group-item">Top performing employee: <span
+                                    id="topPerformingEmployee"></span>
+                            </li>
+
                         </ul>
                     </div>
                 </div>
             </div>
             <div class="col">
                 <div class="card mb-3">
-                    <div class="card-body">
-                        <h5 class="card-title fs-5"> <i class="bi bi-person-video me-2 fs-5"> </i> Customer
-                            Insights</i>
-                        </h5>
-                        <form>
-                            <div class="form-group">
-                                <select class="form-control" id="customerSelect" name="customer_id">
-                                    {% for customer in customers %}
-                                    <option value="{{customer[0]}}">{{customer[1]}} {{customer[2]}}
-                                    </option>
-                                    {%endfor%}
-                                </select>
-                            </div>
-                        </form>
+                    <div class="card-header text-center bg-white fw-medium fs-4">
+                        <i class="bi bi-person-video me-2"> </i> Customer Insights</i>
+                    </div>
+                    <div class="card-body pt-1">
                         <ul class="list-group list-group-flush">
-                            <li class="list-group-item">Total money spent: <span id="totalMoneySpent">₹ 0</span></li>
-                            <li class="list-group-item">Average fuel purchased: <span id="avgFuelPurchased">0
-                                    litres</span>
+                            <li class="list-group-item">
+                                <form>
+                                    <div class="form-group">
+                                        <select class="form-control" id="customerSelect" name="customer_id">
+                                            {% for customer in customers %}
+                                            <option value="{{customer[0]}}">{{customer[1]}} {{customer[2]}}
+                                            </option>
+                                            {%endfor%}
+                                        </select>
+                                    </div>
+                                </form>
                             </li>
-                            <li class="list-group-item">Most frequently purchased: <span
-                                    id="frequentFuelType">Petrol</span>
+
+                            <li class="list-group-item">Total money spent: <span id="totalMoneySpent"></span></li>
+                            <li class="list-group-item">Average fuel purchased: <span id="avgFuelPurchased">
+                                </span>
+                            </li>
+                            <li class="list-group-item">Most frequently purchased: <span id="frequentFuelType"></span>
                             </li>
                         </ul>
                     </div>
