@@ -4,7 +4,7 @@ from models.fuel_inventory import FuelInventory
 from models.fuel_purchases import FuelPurchases
 from helpers.utils import login_required
 
-from flask import Blueprint, request, redirect, url_for, flash, render_template
+from flask import Blueprint, request, redirect, url_for, flash, render_template, session
 from routes.employee import employees
 import datetime
 
@@ -18,7 +18,7 @@ def fuel_purchases():
     customer_data = Customer().get()
     employee_data = Employee().get()
     fuel_data = FuelInventory().get()
-    return render_template('fuel_purchases.html', fuel_purchases=fuel_purchase_data, customers=customer_data, employees=employee_data, fuels=fuel_data)
+    return render_template('fuel_purchases.html', fuel_purchases=fuel_purchase_data, customers=customer_data, employees=employee_data, fuels=fuel_data, request_path=request.path,  role=session['role'], logged_in=True)
 
 
 @fuel_purchases_routes.route('/add_purchase', methods=['POST'])
