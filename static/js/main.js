@@ -12,6 +12,18 @@ $(document).ready(function ()
 
 $(document).ready(function ()
 {
+    $('#records-hours').DataTable({
+        colReorder: true,
+        responsive: true,
+        paging: true,
+        searching: true,
+        ordering: true,
+        border: "1"
+    });
+});
+
+$(document).ready(function ()
+{
     $('#employeeSelect').change(function ()
     {
         var employee = $(this).val();
