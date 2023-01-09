@@ -14,6 +14,12 @@
                     <a class="nav-link {% if request_path == url_for('auth_routes.dashboard') %} active {%endif%}"
                         aria-current="page" href="{{url_for('auth_routes.dashboard')}}">Dashboard</a>
                 </li>
+                {%if role.lower() == 'owner' %}
+                <li class="nav-item">
+                    <a class="nav-link {% if request_path == url_for('admin_routes.admin') %} active {%endif%}"
+                        aria-current="page" href="{{url_for('admin_routes.admin')}}">Admin</a>
+                </li>
+                {%endif%}
                 <li class="nav-item">
                     <a class="nav-link {% if request_path == url_for('employee_routes.employees') %} active {%endif%}"
                         href="{{url_for('employee_routes.employees')}}">Employees</a>

@@ -315,12 +315,14 @@
                     <td>
                         <div class="row">
                             <div class="col text-center">
-                                <button type="button" class="btn mb-1 w-100 btn-sm btn-primary" data-bs-toggle="modal"
-                                    data-bs-target="#update-{{ employee[0] }}">
+                                <button type="button"
+                                    class="btn mb-1 {%if role.lower() == 'employee' %} disabled {%endif%} text-white w-100 btn-sm btn-primary"
+                                    data-bs-toggle="modal" data-bs-target="#update-{{ employee[0] }}">
                                     Edit <i class="text-white ms-2 bi-pencil-fill"></i>
                                 </button>
-                                <button type="button" class="btn w-100 btn-sm btn-danger " data-bs-toggle="modal"
-                                    data-bs-target="#delete-{{ employee[0] }}">
+                                <button type="button"
+                                    class="btn w-100 {%if role.lower() == 'employee' %} disabled {%endif%} text-white btn-sm btn-danger "
+                                    data-bs-toggle="modal" data-bs-target="#delete-{{ employee[0] }}">
                                     Delete <i class="ms-2 bi-trash-fill"></i>
                                 </button>
                             </div>
@@ -363,12 +365,14 @@
                     <td>
                         <div class="row">
                             <div class="col text-center">
-                                <button type="button" class="btn mb-1 w-100 btn-sm btn-primary" data-bs-toggle="modal"
-                                    data-bs-target="#update-{{ hours[2] }}">
+                                <button type="button"
+                                    class="btn mb-1 w-100  {%if role.lower() == 'employee' %} disabled {%endif%} text-white btn-sm btn-primary"
+                                    data-bs-toggle="modal" data-bs-target="#update-{{ hours[2] }}">
                                     Edit <i class="text-white ms-2 bi-pencil-fill"></i>
                                 </button>
-                                <button type="button" class="btn w-100 btn-sm btn-danger " data-bs-toggle="modal"
-                                    data-bs-target="#delete-{{ hours[2] }}">
+                                <button type="button"
+                                    class="btn w-100 btn-sm  {%if role.lower() == 'employee' %} disabled {%endif%} text-white btn-danger "
+                                    data-bs-toggle="modal" data-bs-target="#delete-{{ hours[2] }}">
                                     Delete <i class="ms-2 bi-trash-fill"></i>
                                 </button>
                             </div>
