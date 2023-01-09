@@ -1,7 +1,7 @@
 from models.customer import Customer
 from helpers.utils import login_required
 
-from flask import Blueprint, request, redirect, url_for, flash, render_template
+from flask import Blueprint, request, redirect, url_for, flash, render_template, session
 
 customer_routes = Blueprint('customer_routes', __name__)
 
@@ -10,7 +10,7 @@ customer_routes = Blueprint('customer_routes', __name__)
 @login_required
 def customers():
     customers_data = Customer().get()
-    return render_template('customer.html', customers=customers_data)
+    return render_template('customer.html', customers=customers_data, request_path=request.path,  role=session['role'], logged_in=True)
 
 
 @customer_routes.route('/add_customer', methods=['POST'])
