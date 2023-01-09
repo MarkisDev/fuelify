@@ -1,3 +1,5 @@
+from models.customer import Customer
+from models.employee import Employee
 from models.user import User
 from helpers.utils import login_required
 
@@ -37,6 +39,6 @@ def logout():
 @auth_routes.route('/dashboard')
 @login_required
 def dashboard():
-    user_id = session['user_id']
-    user_data = User().get_user_data(user_id)
-    return render_template('dashboard.html', user=user_data, request_path=request.path,  role=session['role'], logged_in=True)
+    customer_data = Customer().get()
+    employee_data = Employee().get()
+    return render_template('dashboard.html', employees=employee_data, customers=customer_data, request_path=request.path,  role=session['role'], logged_in=True)
