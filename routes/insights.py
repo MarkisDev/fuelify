@@ -26,7 +26,7 @@ def customer_insights():
     return jsonify({
         'total_money_spent': total_money_spent,
         'avg_fuel_purchased': avg_fuel_purchased,
-        'frequent_fuel_type': frequent_fuel_type[0]
+        'frequent_fuel_type': frequent_fuel_type
     })
 
 
