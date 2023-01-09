@@ -56,7 +56,7 @@
                         </h5>
                         <form>
                             <div class="form-group">
-                                <select class="form-control" id="customer_id" name="customer_id">
+                                <select class="form-control" id="customerSelect" name="customer_id">
                                     {% for customer in customers %}
                                     <option value="{{customer[0]}}">{{customer[1]}} {{customer[2]}}
                                     </option>
@@ -65,10 +65,12 @@
                             </div>
                         </form>
                         <ul class="list-group list-group-flush">
-                            <li class="list-group-item">Total fuel sales: <span id="totalFuelSales">$0</span></li>
-                            <li class="list-group-item">Total hours worked: <span id="totalHoursWorked">0</span></li>
-                            <li class="list-group-item">Average hours worked per day: <span
-                                    id="avgHoursWorkedPerDay">0</span>
+                            <li class="list-group-item">Total money spent: <span id="totalMoneySpent">₹ 0</span></li>
+                            <li class="list-group-item">Average fuel purchased: <span id="avgFuelPurchased">0
+                                    litres</span>
+                            </li>
+                            <li class="list-group-item">Most frequently purchased: <span
+                                    id="frequentFuelType">Petrol</span>
                             </li>
                         </ul>
                     </div>
