@@ -52,7 +52,7 @@ class Insights(Database):
             SELECT SUM(hours_worked)
             FROM employee_hours
             WHERE employee_id = ?
-            AND strftime('%W', date) = strftime('%W', 'now')
+            AND strftime('%W', entry_date) = strftime('%W', 'now')
             """,
             (employee_id,)
         )
@@ -98,12 +98,42 @@ class Insights(Database):
         )
         return cursor.fetchone()
 
-    def number_of_transations(self):
+    def total_money_spent(self, customer_id):
         cursor = self.conn.cursor()
         cursor.execute(
             """
-        SELECT COUNT(*)
-        FROM fuel_purchases
-        """
+                SELECT SUM(p.price)
+                FROM fuel_purchases p
+                WHERE p.customer_id = ?
+                """,
+            (customer_id,)
+        )
+        return cursor.fetchone()[0]
+
+    def avg_fuel_purchase(self, customer_id):
+        cursor = self.conn.cursor()
+        cursor.execute(
+            """
+            SELECT AVG(p.quantity)
+            FROM fuel_purchases p
+            WHERE p.customer_id = ?
+            """,
+            (customer_id,)
+        )
+        return cursor.fetchone()[0]
+
+    def frequent_fuel_type(self, customer_id):
+        cursor = self.conn.cursor()
+        cursor.execute(
+            """
+            SELECT f.fuel_type, SUM(p.quantity) as 'total_purchased'
+            FROM fuel_purchases p
+            JOIN fuel_inventory f ON p.fuel_id = f.fuel_id
+            WHERE p.customer_id = ?
+            GROUP BY f.fuel_type
+            ORDER BY total_purchased DESC
+            LIMIT 1
+            """,
+            (customer_id,)
         )
         return cursor.fetchone()
