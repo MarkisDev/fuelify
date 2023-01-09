@@ -24,16 +24,19 @@ def fuel_purchases():
 @fuel_purchases_routes.route('/add_purchase', methods=['POST'])
 @login_required
 def add_purchase():
-    if request.form['employee_id'] and request.form['quantity'] and request.form['customer_id']:
+    if request.form['employee_id'] and request.form['quantity'] and request.form['customer_id'] and request.form['fuel_id']:
         customer_id = request.form['customer_id']
         quantity = request.form['quantity']
         employee_id = request.form['employee_id']
         fuel_id = request.form['fuel_id']
         fuel_data = FuelInventory().get(fuel_id=fuel_id)
-        price = fuel_data[-1]*float(request.form['quantity'])
-        purchase_date = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        FuelPurchases().create(employee_id, customer_id,
-                               fuel_id, quantity, price, purchase_date)
+        if fuel_data[-2] < float(request.form['quantity']):
+            flash('Not enough fuel available!', 'error')
+        else:
+            price = fuel_data[-1]*float(request.form['quantity'])
+            purchase_date = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            FuelPurchases().create(employee_id, customer_id,
+                                   fuel_id, quantity, price, purchase_date)
     else:
         flash('Enter all details!', 'error')
     return redirect(url_for('fuel_purchases_routes.fuel_purchases'))
