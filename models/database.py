@@ -90,7 +90,16 @@ class Database:
                 )
                 """
         )
-
+        # Create trigger to update fuel quantity
+        self.execute(
+            """
+                CREATE TRIGGER IF NOT EXISTS update_fuel_quantity AFTER INSERT ON fuel_purchases
+                BEGIN
+                    UPDATE fuel_inventory SET quantity = quantity - NEW.quantity
+                    WHERE fuel_id = NEW.fuel_id;
+                END;
+            """
+        )
         self.create_employee_and_user('Rijuth', 'Menon', '8217784182', 'Pai Layout',
                                       'rijuthm@gmail.com', 'owner', 00.00,  'admin', 'admin@password', 'admin')
 
