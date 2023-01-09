@@ -2,6 +2,77 @@
 
 {% block content %}
 
+{%for hours in employee_hours%}
+
+
+<div class="modal fade" id="update-{{ hours[2] }}" tabindex="-1" role="dialog" aria-labelledby="updateEmployee"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="">Update
+                    Employee Details
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+            </div>
+            <div class="modal-body">
+                <form action="{{ url_for('employee_routes.update_hours') }}" method="POST">
+                    <div class="form-group mb-3">
+                        <label for="employee_id">Employee</label>
+                        <select class="form-control" id="employee_hours_id" name="employee_hours_id">
+                            {% for employee in employees %}
+                            <option value="{{hours[2]}}">{{hours[0]}} {{hours[1]}}
+                            </option>
+                            {%endfor%}
+                        </select>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label for="salary">Hours</label>
+                        <input type="number" step=0.0001 class="form-control" value="{{hours[4]}}" id="hours"
+                            name="hours" placeholder="Enter hours">
+                    </div>
+
+                    <div class="row mt-3 justify-content-center align-items-center">
+                        <button type="submit" class="btn w-25 btn-prime">Add
+                        </button>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="delete-{{ hours[2] }}" tabindex="-1" role="dialog" aria-labelledby="deleteEmployee"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="">Delete
+                    Employee
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+            </div>
+            <div class="modal-body text-center">
+                <form action="{{ url_for('employee_routes.delete_hours', employee_hours_id=hours[2]) }}" method="POST">
+                    <input type="hidden" name="employee_hours_id" value="{{ hours[2] }}">
+
+                    <div class="form-group">
+                        <p>Are you sure you want to delete this?<br /> This action is irreversible!</p>
+                    </div>
+                    <button type="submit" class="btn btn-danger">Delete
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{%endfor%}
 
 <div class="modal fade" id="add-employee" tabindex="-1" role="dialog" aria-labelledby="deleteEmployee"
     aria-hidden="true">
@@ -48,7 +119,46 @@
                     </div>
                     <div class="form-group mb-3">
                         <label for="salary">Salary</label>
-                        <input type="number" class="form-control" id="salary" name="salary" placeholder="Enter name">
+                        <input type="number" step=0.0001 class="form-control" id="salary" name="salary"
+                            placeholder="Enter name">
+                    </div>
+
+                    <div class="row mt-3 justify-content-center align-items-center">
+                        <button type="submit" class="btn w-25 btn-prime">Add
+                        </button>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="add-hours" tabindex="-1" role="dialog" aria-labelledby="deleteEmployee" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title " id="">Add Employee Hours
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+            </div>
+            <div class="modal-body ">
+                <form action="{{ url_for('employee_routes.add_hours') }}" method="POST">
+                    <div class="form-group mb-3">
+                        <label for="employee_id">Employee</label>
+                        <select class="form-control" id="employee_id" name="employee_id">
+                            {% for employee in employees %}
+                            <option value="{{employee[0]}}">{{employee[1]}} {{employee[2]}}
+                            </option>
+                            {%endfor%}
+                        </select>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label for="salary">Hours</label>
+                        <input type="number" step=0.0001 class="form-control" id="hours" name="hours"
+                            placeholder="Enter hours">
                     </div>
 
                     <div class="row mt-3 justify-content-center align-items-center">
@@ -118,8 +228,8 @@
                     </div>
                     <div class="form-group  mb-3">
                         <label for="phone">Phone</label>
-                        <input type="number" class="form-control" value="{{employee[3]}}" id="phone" name="phone"
-                            placeholder="Enter new phone">
+                        <input type="number" step=0.0001 class="form-control" value="{{employee[3]}}" id="phone"
+                            name="phone" placeholder="Enter new phone">
                     </div>
                     <div class="form-group  mb-3">
                         <label for="address">Address</label>
@@ -144,8 +254,8 @@
                     </div>
                     <div class="form-group  mb-3">
                         <label for="salary">Salary</label>
-                        <input value="{{employee[7]}}" type="number" class="form-control" id="salary" name="salary"
-                            placeholder="Enter name">
+                        <input value="{{employee[7]}}" type="number" step=0.0001 class="form-control" id="salary"
+                            name="salary" placeholder="Enter salary">
                     </div>
                     <div class="row mt-3 justify-content-center align-items-center">
                         <button type="submit" class="btn w-25 btn-prime">Update
@@ -164,9 +274,14 @@
     <div class="row justify-content-end align-items-center">
         <div class="row w-50 justify-content-end align-items-center my-3">
             <button type="button"
-                class="w-25 btn text-white btn-sm btn-prime {%if role.lower() == 'employee' %} disabled {%endif%}"
+                class="me-2 w-25 btn text-white btn-sm btn-prime {%if role.lower() == 'employee' %} disabled {%endif%}"
                 data-bs-toggle="modal" data-bs-target="#add-employee">
                 Add New <i class="text-white ms-2 bi-plus-lg"></i>
+            </button>
+            <button type="button"
+                class="w-25 btn text-white btn-sm btn-prime {%if role.lower() == 'employee' %} disabled {%endif%}"
+                data-bs-toggle="modal" data-bs-target="#add-hours">
+                Add Hours <i class="text-white ms-2 bi-plus-lg"></i>
             </button>
         </div>
         <h2 class="mb-5">Employee Data </h2>
@@ -206,6 +321,54 @@
                                 </button>
                                 <button type="button" class="btn w-100 btn-sm btn-danger " data-bs-toggle="modal"
                                     data-bs-target="#delete-{{ employee[0] }}">
+                                    Delete <i class="ms-2 bi-trash-fill"></i>
+                                </button>
+                            </div>
+
+
+
+                        </div>
+                    </td>
+                </tr>
+
+
+
+
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <h2 class="my-5">Employee Hours Data </h2>
+
+    <div class="row">
+        <table class="table mt-5 rounded-2 mb-5" id="records-hours">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Hours Worked</th>
+                    <th>Entry Date</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for hours in employee_hours %}
+
+
+
+                <tr>
+                    <td>{{ hours[0]}} {{ hours[1] }}</td>
+                    <td>{{ hours[4] }}</td>
+                    <td>{{ hours[5] }}</td>
+
+                    <td>
+                        <div class="row">
+                            <div class="col text-center">
+                                <button type="button" class="btn mb-1 w-100 btn-sm btn-primary" data-bs-toggle="modal"
+                                    data-bs-target="#update-{{ hours[2] }}">
+                                    Edit <i class="text-white ms-2 bi-pencil-fill"></i>
+                                </button>
+                                <button type="button" class="btn w-100 btn-sm btn-danger " data-bs-toggle="modal"
+                                    data-bs-target="#delete-{{ hours[2] }}">
                                     Delete <i class="ms-2 bi-trash-fill"></i>
                                 </button>
                             </div>
