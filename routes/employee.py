@@ -2,7 +2,7 @@ from ntpath import join
 from models.employee import Employee
 from helpers.utils import login_required
 
-from flask import Blueprint, request, redirect, url_for, flash, render_template
+from flask import Blueprint, request, redirect, url_for, flash, render_template, session
 
 employee_routes = Blueprint('employee_routes', __name__)
 
@@ -11,7 +11,7 @@ employee_routes = Blueprint('employee_routes', __name__)
 @login_required
 def employees():
     employees_data = Employee().get()
-    return render_template('employee.html', employees=employees_data)
+    return render_template('employee.html', employees=employees_data, request_path=request.path,  role=session['role'], logged_in=True)
 
 
 @employee_routes.route('/add_employee', methods=['POST'])
