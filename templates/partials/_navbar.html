@@ -1,15 +1,41 @@
 <nav class="navbar navbar-expand-lg border-bottom">
     <div class="container-fluid">
-        <a class="navbar-brand fs-3 my-2 px-2 fw-bold ms-2 d-flex align-items-center" href="/home"><i
-                class="bi bi-fuel-pump-fill me-3"></i>FUELIFY</a>
+        <a class="navbar-brand align-self-center fs-3 my-2 px-2 fw-bold ms-2 d-flex align-items-center" href="/home"><i
+                class="bi bi-fuel-pump-fill me-2 mb-1"></i>FUELIFY</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
             aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
-            <ul class="navbar-nav ms-auto fs-5 me-4 d-flex justify-content-center align-items-center">
+            <ul class="navbar-nav ms-auto fs-6 me-4 d-flex justify-content-center align-items-center">
+
+                {%if logged_in %}
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">Home</a>
+                    <a class="nav-link {% if request_path == url_for('auth_routes.dashboard') %} active {%endif%}"
+                        aria-current="page" href="{{url_for('auth_routes.dashboard')}}">Dashboard</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if request_path == url_for('employee_routes.employees') %} active {%endif%}"
+                        href="{{url_for('employee_routes.employees')}}">Employees</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if request_path == url_for('customer_routes.customers') %} active {%endif%}"
+                        href="{{url_for('customer_routes.customers')}}">Customers</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if request_path == url_for('fuel_inventory_routes.fuel_inventory') %} active {%endif%}"
+                        href="{{url_for('fuel_inventory_routes.fuel_inventory')}}">Inventory</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if request_path == url_for('fuel_purchases_routes.fuel_purchases') %} active {%endif%}"
+                        href="{{url_for('fuel_purchases_routes.fuel_purchases')}}">Purchases</a>
+                </li>
+                <li class="nav-item ms-2 w-25">
+                    <a class="btn btn-prime btn-sm px-3" href="/logout">Logout</a>
+                </li>
+                {% else %}
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="{{url_for('home')}}">Home</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#features">Features</a>
@@ -20,7 +46,7 @@
                 <li class="nav-item ms-2 w-25">
                     <a class="btn btn-prime btn-sm px-3" href="/login">Login</a>
                 </li>
-
+                {%endif%}
             </ul>
         </div>
     </div>
