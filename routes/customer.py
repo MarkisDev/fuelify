@@ -22,6 +22,7 @@ def add_customer():
         phone = request.form['phone']
         email = request.form['email']
         Customer().create(first_name, last_name, phone, email)
+        flash('Success!', 'success')
     else:
         flash('Enter all details!', 'error')
     return redirect(url_for('customer_routes.customers'))
@@ -31,6 +32,7 @@ def add_customer():
 @login_required
 def delete_customer(customer_id):
     Customer().delete(customer_id)
+    flash('Success!', 'success')
     return redirect(url_for('customer_routes.customers'))
 
 
@@ -44,4 +46,7 @@ def update_customer():
         phone = request.form['phone']
         email = request.form['email']
         Customer().update(customer_id, first_name, last_name, phone, email)
+        flash('Success!', 'success')
+    else:
+        flash('Enter all details!', 'error')
     return redirect(url_for('customer_routes.customers'))

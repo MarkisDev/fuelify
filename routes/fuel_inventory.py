@@ -21,6 +21,7 @@ def add_fuel():
         quantity = request.form['quantity']
         price = request.form['price']
         FuelInventory().create_fuel(fuel_type, quantity, price)
+        flash('Success!', 'success')
     else:
         flash('Enter all details!', 'error')
     return redirect(url_for('fuel_inventory_routes.fuel_inventory'))
@@ -30,6 +31,7 @@ def add_fuel():
 @login_required
 def delete_fuel(fuel_id):
     FuelInventory().delete_fuel(fuel_id)
+    flash('Success!', 'success')
     return redirect(url_for('fuel_inventory_routes.fuel_inventory'))
 
 
@@ -40,9 +42,14 @@ def update_fuel():
     if request.form['new_quantity'] and request.form['price']:
         FuelInventory().update_fuel(
             fuel_id, quantity=request.form['new_quantity'], price=request.form['price'])
+        flash('Success!', 'success')
     elif request.form['new_quantity']:
         FuelInventory().update_fuel(
             fuel_id, quantity=request.form['new_quantity'])
+        flash('Success!', 'success')
     elif request.form['price']:
         FuelInventory().update_fuel(fuel_id, price=request.form['price'])
+        flash('Success!', 'success')
+    else:
+        flash('Enter details!', 'error')
     return redirect(url_for('fuel_inventory_routes.fuel_inventory'))

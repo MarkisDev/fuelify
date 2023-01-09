@@ -13,7 +13,6 @@ admin_routes = Blueprint('admin_routes', __name__)
 def admin():
     users_data = User().get_user_data()
     employees_data = Employee().get()
-    print(users_data)
     return render_template('admin.html', employees=employees_data, users=users_data, request_path=request.path,  role=session['role'], logged_in=True)
 
 
@@ -26,6 +25,7 @@ def add_user():
         password = request.form['password']
         role = request.form['role']
         User().add_user(employee_id, username, password, role)
+        flash('Success!', 'success')
     else:
         flash('Enter all details!', 'error')
     return redirect(url_for('admin_routes.admin'))
@@ -35,6 +35,7 @@ def add_user():
 @login_required
 def delete_user(user_id):
     User().delete_user(user_id)
+    flash('Success!', 'success')
     return redirect(url_for('admin_routes.admin'))
 
 
@@ -48,4 +49,7 @@ def update_user():
         password = request.form['password']
         role = request.form['role']
         User().update_user(user_id, employee_id, username, password, role)
+        flash('Success!', 'success')
+    else:
+        flash('Enter all details!', 'error')
     return redirect(url_for('admin_routes.admin'))

@@ -37,6 +37,7 @@ def add_purchase():
             purchase_date = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             FuelPurchases().create(employee_id, customer_id,
                                    fuel_id, quantity, price, purchase_date)
+            flash('Success!', 'success')
     else:
         flash('Enter all details!', 'error')
     return redirect(url_for('fuel_purchases_routes.fuel_purchases'))
@@ -46,6 +47,7 @@ def add_purchase():
 @login_required
 def delete_purchase(purchase_id):
     FuelPurchases().delete(purchase_id)
+    flash('Success!', 'success')
     return redirect(url_for('fuel_purchases_routes.fuel_purchases'))
 
 
@@ -63,4 +65,7 @@ def update_purchase():
         purchase_date = datetime.datetime.now()
         FuelPurchases().update(purchase_id, employee_id, customer_id,
                                fuel_id, quantity, price, purchase_date)
+        flash('Success!', 'success')
+    else:
+        flash('Enter all details!', 'error')
     return redirect(url_for('fuel_purchases_routes.fuel_purchases'))

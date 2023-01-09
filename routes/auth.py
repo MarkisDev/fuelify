@@ -22,6 +22,7 @@ def login():
             session['user_id'] = result[0]
             session['username'] = result[1]
             session['role'] = result[4]
+            flash('Logged in successfully!', 'success')
             return redirect(url_for('auth_routes.dashboard'))
         else:
             flash('Incorrect username or password')
@@ -33,6 +34,7 @@ def logout():
     session.pop('user_id', None)
     session.pop('username', None)
     session.pop('role', None)
+    flash('Logged out!', 'success')
     return redirect(url_for('auth_routes.login'))
 
 
