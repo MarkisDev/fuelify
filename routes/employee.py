@@ -1,3 +1,4 @@
+import datetime
 from ntpath import join
 from models.employee import Employee
 from helpers.utils import login_required
@@ -11,7 +12,9 @@ employee_routes = Blueprint('employee_routes', __name__)
 @login_required
 def employees():
     employees_data = Employee().get()
-    return render_template('employee.html', employees=employees_data, request_path=request.path,  role=session['role'], logged_in=True)
+    employee_hours = Employee().get_employee_hours()
+    print(employee_hours)
+    return render_template('employee.html', employee_hours=employee_hours, employees=employees_data, request_path=request.path,  role=session['role'], logged_in=True)
 
 
 @employee_routes.route('/add_employee', methods=['POST'])
@@ -28,6 +31,39 @@ def add_employee():
         Employee().create(first_name, last_name, phone, address, email, job_role, salary)
     else:
         flash('Enter all details!', 'error')
+    return redirect(url_for('employee_routes.employees'))
+
+
+@employee_routes.route('/add_hours', methods=['POST'])
+@login_required
+def add_hours():
+    if request.form['employee_id'] and request.form['hours']:
+        employee_id = request.form['employee_id']
+        hours = request.form['hours']
+        entry_date = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        Employee().insert_employee_hours(employee_id,  entry_date, hours)
+    else:
+        flash('Enter all details!', 'error')
+    return redirect(url_for('employee_routes.employees'))
+
+
+@employee_routes.route('/update_hours', methods=['POST'])
+@login_required
+def update_hours():
+    if request.form['employee_hours_id'] and request.form['hours']:
+        employee_hours_id = request.form['employee_hours_id']
+        hours = request.form['hours']
+        entry_date = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        Employee().update_employee_hours(employee_hours_id, hours, entry_date)
+    else:
+        flash('Enter all details!', 'error')
+    return redirect(url_for('employee_routes.employees'))
+
+
+@employee_routes.route('/delete_hours/<int:employee_hours_id>', methods=['POST'])
+@login_required
+def delete_hours(employee_hours_id):
+    Employee().delete_employee_hours(employee_hours_id)
     return redirect(url_for('employee_routes.employees'))
 
 
