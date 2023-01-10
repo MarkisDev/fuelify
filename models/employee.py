@@ -61,7 +61,7 @@ class Employee(Database):
                 """
                 SELECT e.first_name, e.last_name, h.*
                 FROM employee_hours h, employees e
-                WHERE employee_id = ?
+                WHERE h.employee_id = e.employee_id AND employee_hours_id = ?
                 """,
                 (employee_id,),
             )
@@ -71,7 +71,7 @@ class Employee(Database):
                 """
                 SELECT e.first_name, e.last_name, h.*
                 FROM employee_hours h, employees e
-                WHERE employee_hours_id = ?
+                WHERE h.employee_id = e.employee_id AND employee_hours_id = ?
                 """,
                 (employee_hours_id,),
             )
@@ -81,6 +81,7 @@ class Employee(Database):
                 """
                 SELECT e.first_name, e.last_name, h.*
                 FROM employee_hours h, employees e
+                WHERE h.employee_id = e.employee_id
                 """,
             )
             return cursor.fetchall()
