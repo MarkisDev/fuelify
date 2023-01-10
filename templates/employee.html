@@ -5,7 +5,7 @@
 {%for hours in employee_hours%}
 
 
-<div class="modal fade" id="update-{{ hours[2] }}" tabindex="-1" role="dialog" aria-labelledby="updateEmployee"
+<div class="modal fade" id="update-hour-{{ hours[2] }}" tabindex="-1" role="dialog" aria-labelledby="updateEmployee"
     aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
         <div class="modal-content">
@@ -46,7 +46,7 @@
 </div>
 
 
-<div class="modal fade" id="delete-{{ hours[2] }}" tabindex="-1" role="dialog" aria-labelledby="deleteEmployee"
+<div class="modal fade" id="delete-hour-{{ hours[2] }}" tabindex="-1" role="dialog" aria-labelledby="deleteEmployee"
     aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
         <div class="modal-content">
@@ -367,12 +367,12 @@
                             <div class="col text-center">
                                 <button type="button"
                                     class="btn mb-1 w-100  {%if role.lower() == 'employee' %} disabled {%endif%} text-white btn-sm btn-primary"
-                                    data-bs-toggle="modal" data-bs-target="#update-{{ hours[2] }}">
+                                    data-bs-toggle="modal" data-bs-target="#update-hour-{{ hours[2] }}">
                                     Edit <i class="text-white ms-2 bi-pencil-fill"></i>
                                 </button>
                                 <button type="button"
                                     class="btn w-100 btn-sm  {%if role.lower() == 'employee' %} disabled {%endif%} text-white btn-danger "
-                                    data-bs-toggle="modal" data-bs-target="#delete-{{ hours[2] }}">
+                                    data-bs-toggle="modal" data-bs-target="#delete-hour-{{ hours[2] }}">
                                     Delete <i class="ms-2 bi-trash-fill"></i>
                                 </button>
                             </div>
