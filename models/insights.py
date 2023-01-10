@@ -4,9 +4,9 @@ from models.database import Database
 class Insights(Database):
 
     def total_sales_month(self, employee_id=None):
-        cursor = self.conn.cursor()
+        
         if employee_id:
-            cursor.execute(
+            cursor = self.execute(
                 """
                 SELECT SUM(price)
                 FROM fuel_purchases
@@ -16,7 +16,7 @@ class Insights(Database):
             )
             return cursor.fetchone()
         else:
-            cursor.execute(
+            cursor = self.execute(
                 """
                 SELECT SUM(price)
                 FROM fuel_purchases
@@ -25,9 +25,9 @@ class Insights(Database):
             return cursor.fetchone()
 
     def avg_sales(self, employee_id=None):
-        cursor = self.conn.cursor()
+        
         if employee_id:
-            cursor.execute(
+            cursor = self.execute(
                 """
                 SELECT AVG(price)
                 FROM fuel_purchases
@@ -37,7 +37,7 @@ class Insights(Database):
             ),
             return cursor.fetchone()
         else:
-            cursor.execute(
+            cursor = self.execute(
                 """
                 SELECT AVG(price)
                 FROM fuel_purchases
@@ -46,8 +46,8 @@ class Insights(Database):
             return cursor.fetchone()
 
     def total_hours_worked_week(self, employee_id):
-        cursor = self.conn.cursor()
-        cursor.execute(
+        
+        cursor = self.execute(
             """
             SELECT SUM(hours_worked)
             FROM employee_hours
@@ -59,8 +59,8 @@ class Insights(Database):
         return cursor.fetchone()
 
     def avg_hours_worked_day(self, employee_id):
-        cursor = self.conn.cursor()
-        cursor.execute(
+        
+        cursor = self.execute(
             """
             SELECT AVG(hours_worked)
             FROM employee_hours
@@ -71,8 +71,8 @@ class Insights(Database):
         return cursor.fetchone()
 
     def top_performing_employee(self):
-        cursor = self.conn.cursor()
-        cursor.execute(
+        
+        cursor = self.execute(
             """
             SELECT e.first_name, e.last_name, SUM(p.price) as 'sales'
             FROM fuel_purchases p
@@ -85,8 +85,8 @@ class Insights(Database):
         return cursor.fetchone()
 
     def top_selling_fuel(self):
-        cursor = self.conn.cursor()
-        cursor.execute(
+        
+        cursor = self.execute(
             """
         SELECT f.fuel_type, SUM(p.quantity) as 'total_sold'
         FROM fuel_purchases p
@@ -99,8 +99,8 @@ class Insights(Database):
         return cursor.fetchone()
 
     def total_money_spent(self, customer_id):
-        cursor = self.conn.cursor()
-        cursor.execute(
+        
+        cursor = self.execute(
             """
                 SELECT SUM(p.price)
                 FROM fuel_purchases p
@@ -111,8 +111,8 @@ class Insights(Database):
         return cursor.fetchone()[0]
 
     def avg_fuel_purchase(self, customer_id):
-        cursor = self.conn.cursor()
-        cursor.execute(
+        
+        cursor = self.execute(
             """
             SELECT AVG(p.quantity)
             FROM fuel_purchases p
@@ -123,8 +123,8 @@ class Insights(Database):
         return cursor.fetchone()[0]
 
     def frequent_fuel_type(self, customer_id):
-        cursor = self.conn.cursor()
-        cursor.execute(
+        
+        cursor = self.execute(
             """
             SELECT f.fuel_type, SUM(p.quantity) as 'total_purchased'
             FROM fuel_purchases p
@@ -139,8 +139,8 @@ class Insights(Database):
         return cursor.fetchone()
 
     def top_performing_employee(self):
-        cursor = self.conn.cursor()
-        cursor.execute(
+        
+        cursor = self.execute(
             """
             SELECT e.first_name, e.last_name, SUM(p.quantity) as 'total_sold'
             FROM fuel_purchases p
@@ -153,8 +153,8 @@ class Insights(Database):
         return cursor.fetchone()
 
     def popular_fuel_type(self):
-        cursor = self.conn.cursor()
-        cursor.execute(
+        
+        cursor = self.execute(
             """
             SELECT f.fuel_type, SUM(p.quantity) as 'total_sold'
             FROM fuel_purchases p
@@ -167,8 +167,8 @@ class Insights(Database):
         return cursor.fetchone()
 
     def avg_purchase_quantity(self):
-        cursor = self.conn.cursor()
-        cursor.execute(
+        
+        cursor = self.execute(
             """
             SELECT AVG(quantity) as 'avg_quantity'
             FROM fuel_purchases

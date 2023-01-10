@@ -4,9 +4,8 @@ from models.database import Database
 class Employee(Database):
 
     def get(self, employee_id=None):
-        cursor = self.conn.cursor()
         if employee_id:
-            cursor.execute(
+            cursor = self.execute(
                 """
                 SELECT *
                 FROM employees
@@ -16,7 +15,7 @@ class Employee(Database):
             )
             return cursor.fetchone()
         else:
-            cursor.execute(
+            cursor = self.execute(
                 """
                 SELECT *
                 FROM employees
@@ -25,8 +24,7 @@ class Employee(Database):
         return cursor.fetchall()
 
     def create(self, first_name, last_name, phone_number, address, email, job_role, salary):
-        cursor = self.conn.cursor()
-        cursor.execute(
+        cursor = self.execute(
             """
             INSERT INTO employees (first_name, last_name, phone_number, address, email, job_role, salary)
             VALUES (?, ?, ?, ?, ?, ?, ?)
@@ -36,8 +34,7 @@ class Employee(Database):
         self.conn.commit()
 
     def delete(self, employee_id):
-        cursor = self.conn.cursor()
-        cursor.execute(
+        cursor = self.execute(
             """
             DELETE FROM employees
             WHERE employee_id=?
@@ -47,8 +44,7 @@ class Employee(Database):
         self.conn.commit()
 
     def update(self, employee_id, first_name, last_name, phone_number, address, email, job_role, salary):
-        cursor = self.conn.cursor()
-        cursor.execute(
+        cursor = self.execute(
             """
             UPDATE employees
             SET first_name=?, last_name=?, phone_number=?, address=?, email=?, job_role=?, salary=?
@@ -60,9 +56,8 @@ class Employee(Database):
         self.conn.commit()
 
     def get_employee_hours(self, employee_id=None, employee_hours_id=None):
-        cursor = self.conn.cursor()
         if employee_id:
-            cursor.execute(
+            cursor = self.execute(
                 """
                 SELECT e.first_name, e.last_name, h.*
                 FROM employee_hours h, employees e
@@ -72,7 +67,7 @@ class Employee(Database):
             )
             return cursor.fetchall()
         elif employee_hours_id:
-            cursor.execute(
+            cursor = self.execute(
                 """
                 SELECT e.first_name, e.last_name, h.*
                 FROM employee_hours h, employees e
@@ -82,7 +77,7 @@ class Employee(Database):
             )
             return cursor.fetchone()
         else:
-            cursor.execute(
+            cursor = self.execute(
                 """
                 SELECT e.first_name, e.last_name, h.*
                 FROM employee_hours h, employees e
@@ -91,8 +86,7 @@ class Employee(Database):
             return cursor.fetchall()
 
     def insert_employee_hours(self, employee_id, entry_date, hours_worked):
-        cursor = self.conn.cursor()
-        cursor.execute(
+        cursor = self.execute(
             """
             INSERT INTO employee_hours (employee_id, entry_date, hours_worked)
             VALUES (?, ?, ?)
@@ -102,8 +96,7 @@ class Employee(Database):
         self.conn.commit()
 
     def delete_employee_hours(self, employee_hours_id):
-        cursor = self.conn.cursor()
-        cursor.execute(
+        cursor = self.execute(
             """
             DELETE FROM employee_hours
             WHERE employee_hours_id = ?
@@ -113,8 +106,7 @@ class Employee(Database):
         self.conn.commit()
 
     def update_employee_hours(self, employee_hours_id, hours_worked, entry_date):
-        cursor = self.conn.cursor()
-        cursor.execute(
+        cursor = self.execute(
             """
             UPDATE employee_hours
             SET hours_worked = ?, entry_date =?
